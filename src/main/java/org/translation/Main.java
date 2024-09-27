@@ -44,16 +44,14 @@ public class Main {
             }
             CountryCodeConverter countryConverter = new CountryCodeConverter();
             String countryCode = countryConverter.fromCountry(country);
-
-            String language = promptForLanguage(translator, country);
+            String language = promptForLanguage(translator, countryCode.toLowerCase());
             if (language.equals(QUIT)) {
                 break;
             }
 
             LanguageCodeConverter languageConverter = new LanguageCodeConverter();
             String languageCode = languageConverter.fromLanguage(language);
-
-            String translatedCountry = translator.translate(countryCode, languageCode);
+            String translatedCountry = translator.translate(countryCode.toLowerCase(), languageCode);
 
             System.out.println(country + " in " + language + " is " + translatedCountry);
             System.out.println("Press enter to continue or quit to exit.");
