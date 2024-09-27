@@ -16,9 +16,8 @@ public class CountryCodeConverter {
     private Map<String, String> nameCode = new HashMap<>();
     private Map<String, String> codeName = new HashMap<>();
 
-    // Define constants for the indices of each field after splitting
-    private static final int COUNTRY_NAME_INDEX = 0;
-    private static final int ALPHA3_CODE_INDEX = 2;
+    private final int alpha3 = 2;
+    private final int countryNameIndex = 0;
 
     /**
      * Default constructor which will load the country codes from "country-codes.txt"
@@ -48,14 +47,14 @@ public class CountryCodeConverter {
 
                 String[] tokens = line.split("\\t|\\s{2,}");
 
-                String countryName = tokens[COUNTRY_NAME_INDEX].trim();
-                String alpha3Code = tokens[ALPHA3_CODE_INDEX].trim().toUpperCase();
+                String countryName = tokens[countryNameIndex].trim();
+                String alpha3Code = tokens[alpha3].trim().toUpperCase();
 
-                // Populate the maps
                 nameCode.put(countryName, alpha3Code);
                 codeName.put(alpha3Code, countryName);
             }
-        } catch (IOException | URISyntaxException ex) {
+        }
+        catch (IOException | URISyntaxException ex) {
             throw new RuntimeException(ex);
         }
     }
@@ -80,7 +79,9 @@ public class CountryCodeConverter {
      * @return the 3-letter code of the country
      */
     public String fromCountry(String country) {
-        if (country == null) return null;
+        if (country == null) {
+            return null;
+        }
         return nameCode.get(country.trim());
     }
 
